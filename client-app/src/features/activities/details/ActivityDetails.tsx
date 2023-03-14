@@ -1,3 +1,4 @@
+import { observer } from "mobx-react-lite";
 import {
 	Button,
 	ButtonGroup,
@@ -8,19 +9,18 @@ import {
 	CardMeta,
 	Image,
 } from "semantic-ui-react";
-import { Activity } from "../../../app/models";
+import { useStore } from "../../../app/stores/store";
 
-interface Props {
-	activity: Activity;
-	cancelSelectActivity: () => void;
-	openForm: (id: string) => void;
-}
+const ActivityDetails = () => {
+	const { activityStore } = useStore();
+	const {
+		selectedActivity: activity,
+		openForm,
+		cancelSelectActivity,
+	} = activityStore;
 
-const ActivityDetails = ({
-	activity,
-	cancelSelectActivity,
-	openForm,
-}: Props) => {
+	if (!activity) return null;
+
 	return (
 		<Card fluid>
 			<Image src={`/assets/categoryImages/${activity.category}.jpg`} />
@@ -50,4 +50,4 @@ const ActivityDetails = ({
 		</Card>
 	);
 };
-export default ActivityDetails;
+export default observer(ActivityDetails);
