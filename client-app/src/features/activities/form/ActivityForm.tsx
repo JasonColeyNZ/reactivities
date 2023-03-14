@@ -1,5 +1,6 @@
 import { observer } from "mobx-react-lite";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
 	Button,
 	Form,
@@ -7,19 +8,24 @@ import {
 	FormTextArea,
 	Segment,
 } from "semantic-ui-react";
+import Loading from "../../../app/layout/Loading";
+import { Activity } from "../../../app/models";
 import { useStore } from "../../../app/stores/store";
+import { v4 as uuid } from "uuid";
 
 const ActivityForm = () => {
 	const { activityStore } = useStore();
 	const {
-		selectedActivity,
-		closeForm,
 		createActivity,
 		updateActivity,
 		loading,
+		loadActivity,
+		loadingInitial,
 	} = activityStore;
+	const { id } = useParams();
+	const navigate = useNavigate();
 
-	const initialState = selectedActivity ?? {
+	const [activity, setActivity] = useState<Activity>({
 		id: "",
 		category: "",
 		city: "",
@@ -27,19 +33,33 @@ const ActivityForm = () => {
 		description: "",
 		title: "",
 		venue: "",
-	};
+	});
 
-	const [activity, setActivity] = useState(initialState);
+	useEffect(() => {
+		if (id) loadActivity(id).then((activity) => setActivity(activity!));
+	}, [id, loadActivity]);
 
 	function handleSubmit() {
-		activity.id ? updateActivity(activity) : createActivity(activity);
+		if (!activity.id) {
+			activity.id = uuid();
+			createActivity(activity).then(() => {
+				navigate(`/activities/${activity.id}`);
+			});
+		} else {
+			updateActivity(activity).then(() => {
+				navigate(`/activities/${activity.id}`);
+			});
+		}
 	}
+
 	function handleInputChange(
 		event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 	) {
 		const { name, value } = event.target;
 		setActivity({ ...activity, [name]: value });
 	}
+
+	if (loadingInitial) return <Loading content="Loading activity..." />;
 
 	return (
 		<Segment clearing>
@@ -89,10 +109,11 @@ const ActivityForm = () => {
 					content="Submit"
 				/>
 				<Button
-					onClick={closeForm}
 					floated="right"
 					type="submit"
 					content="Cancel"
+					as={Link}
+					to="/activities"
 				/>
 			</Form>
 		</Segment>

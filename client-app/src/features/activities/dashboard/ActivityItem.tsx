@@ -1,4 +1,5 @@
 import { useState, SyntheticEvent } from "react";
+import { Link } from "react-router-dom";
 import {
 	Button,
 	Item,
@@ -18,7 +19,7 @@ interface Props {
 
 const ActivityItem = ({ activity }: Props) => {
 	const { activityStore } = useStore();
-	const { selectActivity, loading, deleteActivity } = activityStore;
+	const { loading, deleteActivity } = activityStore;
 
 	const [target, setTarget] = useState("");
 	const handleActivityDelete = (
@@ -42,7 +43,8 @@ const ActivityItem = ({ activity }: Props) => {
 				</ItemDescription>
 				<ItemExtra>
 					<Button
-						onClick={() => selectActivity(activity.id)}
+						as={Link}
+						to={`/activities/${activity.id}`}
 						floated="right"
 						content="View"
 						color="blue"
