@@ -4,10 +4,12 @@ import { useParams } from "react-router-dom";
 import { Grid, GridColumn } from "semantic-ui-react";
 import Loading from "../../../app/layout/Loading";
 import { useStore } from "../../../app/stores/store";
-import ActivityDetailedChat from "./ActivityDetailedChat";
-import ActivityDetailedHeader from "./ActivityDetailedHeader";
-import ActivityDetailedInfo from "./ActivityDetailedInfo";
-import ActivityDetailedSidebar from "./ActivityDetailedSidebar";
+import {
+	ActivityDetailedChat,
+	ActivityDetailedHeader,
+	ActivityDetailedInfo,
+	ActivityDetailedSidebar,
+} from "./";
 
 const ActivityDetails = () => {
 	const { activityStore } = useStore();
