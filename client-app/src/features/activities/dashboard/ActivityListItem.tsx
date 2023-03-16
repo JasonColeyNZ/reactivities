@@ -9,10 +9,12 @@ import {
 	ItemGroup,
 	ItemHeader,
 	ItemImage,
+	Label,
 	Segment,
 	SegmentGroup,
 } from "semantic-ui-react";
 import { Activity } from "../../../app/models";
+import ActivityListItemAttendees from "./ActivityListItemAttendees";
 
 interface Props {
 	activity: Activity;
@@ -22,14 +24,43 @@ const ActivityListItem = ({ activity }: Props) => {
 	return (
 		<SegmentGroup>
 			<Segment>
+				{activity.isCancelled && (
+					<Label
+						attached="top"
+						color="red"
+						content="Cancelled"
+						style={{ textAlign: "center" }}
+					/>
+				)}
 				<ItemGroup>
 					<Item>
-						<ItemImage size="tiny" circular src="/assets/user.png" />
+						<ItemImage
+							style={{ marginBottom: 3 }}
+							size="tiny"
+							circular
+							src="/assets/user.png"
+						/>
 						<ItemContent>
 							<ItemHeader as={Link} to={`/activities/${activity.id}`}>
 								{activity.title}
 							</ItemHeader>
-							<ItemDescription>Hosted by Bob</ItemDescription>
+							<ItemDescription>
+								Hosted by {activity.host?.displayName}
+							</ItemDescription>
+							{activity.isHost && (
+								<ItemDescription>
+									<Label basic color="orange">
+										You are hosting this activity
+									</Label>
+								</ItemDescription>
+							)}
+							{activity.isGoing && !activity.isHost && (
+								<ItemDescription>
+									<Label basic color="green">
+										You are going to this activity
+									</Label>
+								</ItemDescription>
+							)}
 						</ItemContent>
 					</Item>
 				</ItemGroup>
@@ -40,7 +71,9 @@ const ActivityListItem = ({ activity }: Props) => {
 					<Icon name="marker" /> {activity.venue}
 				</span>
 			</Segment>
-			<Segment secondary>Attendees go here</Segment>
+			<Segment secondary>
+				<ActivityListItemAttendees attendees={activity.attendees!} />
+			</Segment>
 			<Segment clearing>
 				<span>{activity.description}</span>
 				<Button
