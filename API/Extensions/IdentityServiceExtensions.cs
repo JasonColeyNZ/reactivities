@@ -40,8 +40,13 @@ namespace API.Extensions
                 {
                     policy.Requirements.Add(new IsHostRequirement());
                 });
+                opt.AddPolicy("IsCurrentUser", policy =>
+                {
+                    policy.Requirements.Add(new IsCurrentUserRequirement());
+                });
             });
             services.AddTransient<IAuthorizationHandler, IsHostRequirementHandler>();
+            services.AddTransient<IAuthorizationHandler, IsCurrentUserRequirementHandler>();
             services.AddScoped<TokenService>();
 
             return services;
