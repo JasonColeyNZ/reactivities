@@ -18,11 +18,13 @@ const ActivityDetails = () => {
 		selectedActivity: activity,
 		loadActivity,
 		loadingInitial,
+		clearSelectedActivity,
 	} = activityStore;
 
 	useEffect(() => {
 		if (id) loadActivity(id);
-	}, [id, loadActivity]);
+		return () => clearSelectedActivity();
+	}, [id, loadActivity, clearSelectedActivity]);
 
 	if (loadingInitial || !activity) return <Loading />;
 
@@ -31,7 +33,7 @@ const ActivityDetails = () => {
 			<GridColumn width="10">
 				<ActivityDetailedHeader activity={activity} />
 				<ActivityDetailedInfo activity={activity} />
-				<ActivityDetailedChat />
+				<ActivityDetailedChat activityId={activity.id} />
 			</GridColumn>
 			<GridColumn width="6">
 				<ActivityDetailedSidebar activity={activity} />

@@ -16,7 +16,12 @@ const MyTextArea = (props: Props) => {
 	return (
 		<FormField error={meta.touched && !!meta.error}>
 			<label>{props.label}</label>
-			<textarea {...field} {...props} placeholder={_placeholder} />
+			<textarea
+				{...field}
+				{...props}
+				placeholder={_placeholder}
+				style={{ width: "100%" }}
+			/>
 			{meta.touched && meta.error ? (
 				<Label basic color="red">
 					{meta.error}
