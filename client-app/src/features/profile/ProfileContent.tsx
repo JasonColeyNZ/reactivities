@@ -1,7 +1,8 @@
 import { Tab, TabPane } from "semantic-ui-react";
 import { Profile } from "../../app/models/profile";
+import { useStore } from "../../app/stores/store";
 import ProfileAbout from "./ProfileAbout";
-import ProfileEditForm from "./ProfileEditForm";
+import ProfileFollowings from "./ProfileFollowings";
 import ProfilePhotos from "./ProfilePhotos";
 
 interface Props {
@@ -9,6 +10,7 @@ interface Props {
 }
 
 const ProfileContent = ({ profile }: Props) => {
+	const { profileStore } = useStore();
 	const panes = [
 		{
 			menuItem: "About",
@@ -29,11 +31,19 @@ const ProfileContent = ({ profile }: Props) => {
 		{ menuItem: "Events", render: () => <TabPane>Events Content</TabPane> },
 		{
 			menuItem: "Followers",
-			render: () => <TabPane>Followers Content</TabPane>,
+			render: () => (
+				<TabPane>
+					<ProfileFollowings />
+				</TabPane>
+			),
 		},
 		{
 			menuItem: "Following",
-			render: () => <TabPane>Following Content</TabPane>,
+			render: () => (
+				<TabPane>
+					<ProfileFollowings />
+				</TabPane>
+			),
 		},
 	];
 	return (
@@ -41,6 +51,9 @@ const ProfileContent = ({ profile }: Props) => {
 			menu={{ fluid: true, vertical: true }}
 			menuPosition="right"
 			panes={panes}
+			onTabChange={(e, data) => {
+				profileStore.setActiveTab(data.activeIndex);
+			}}
 		></Tab>
 	);
 };

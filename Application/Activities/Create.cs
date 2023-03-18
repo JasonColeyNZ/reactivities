@@ -46,7 +46,7 @@ namespace Application.Activities
                     IsHost = true
                 };
                 //Add attendee to Activity.Attendees
-                request.Activity.Attendees.Add(attendee);
+                request.Activity.Attendees.Append(attendee);
 
                 _context.Activities.Add(request.Activity);
 

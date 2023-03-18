@@ -1,7 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { Activity } from "../models";
-import { v4 as uuid } from "uuid";
 import { format } from "date-fns";
 import { store } from "./store";
 import { Profile } from "../models/profile";
@@ -60,6 +59,7 @@ export default class ActivityStore {
 			this.setInitialLoading(true);
 			try {
 				activity = await agent.Activities.details(id);
+
 				runInAction(() => {
 					this.selectedActivity = activity;
 				});
@@ -85,6 +85,8 @@ export default class ActivityStore {
 			);
 		}
 		activity.date = new Date(activity.date!);
+		console.log(activity);
+
 		this.activityRegistry.set(activity.id, activity);
 	};
 
@@ -197,5 +199,18 @@ export default class ActivityStore {
 
 	clearSelectedActivity = () => {
 		this.selectedActivity = undefined;
+	};
+
+	updateAttendeeFollowing = (username: string) => {
+		this.activityRegistry.forEach((activity) => {
+			activity.attendees.forEach((attendee) => {
+				if (attendee.username === username) {
+					attendee.following
+						? attendee.followersCount--
+						: attendee.followersCount++;
+					attendee.following = !attendee.following;
+				}
+			});
+		});
 	};
 }

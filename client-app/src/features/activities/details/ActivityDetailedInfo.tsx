@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import { observer } from "mobx-react-lite";
+import { useEffect, useState } from "react";
 import { Segment, Grid, Icon } from "semantic-ui-react";
 import { Activity } from "../../../app/models/activity";
 
@@ -8,6 +9,14 @@ interface Props {
 }
 
 const ActivityDetailedInfo = ({ activity }: Props) => {
+	const [activityDate, setActivityDate] = useState<Date>();
+	useEffect(() => {
+		if (activity && activity.date) {
+			let newDate = new Date(activity.date + "Z");
+			setActivityDate(newDate);
+		}
+	}, [activity]);
+
 	return (
 		<Segment.Group>
 			<Segment attached="top">
@@ -26,7 +35,9 @@ const ActivityDetailedInfo = ({ activity }: Props) => {
 						<Icon name="calendar" size="large" color="teal" />
 					</Grid.Column>
 					<Grid.Column width={15}>
-						{/* <span>{format(activity.date!, "dd MMM yyyy h:mm aa")}</span> */}
+						{activityDate && (
+							<span>{format(activityDate, "dd MMM yyyy h:mm aa")}</span>
+						)}
 					</Grid.Column>
 				</Grid>
 			</Segment>

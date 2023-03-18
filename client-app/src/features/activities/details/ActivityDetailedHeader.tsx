@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import { observer } from "mobx-react-lite";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, Header, Item, Segment, Image, Label } from "semantic-ui-react";
 import { Activity } from "../../../app/models/activity";
@@ -26,6 +27,15 @@ const ActivityDetailedHeader = ({ activity }: Props) => {
 	const {
 		activityStore: { updateAttendance, loading, cancelActivityToggle },
 	} = useStore();
+
+	const [activityDate, setActivityDate] = useState<Date>();
+	useEffect(() => {
+		if (activity && activity.date) {
+			let newDate = new Date(activity.date + "Z");
+			setActivityDate(newDate);
+		}
+	}, [activity]);
+
 	return (
 		<Segment.Group>
 			<Segment basic attached="top" style={{ padding: "0" }}>
@@ -51,7 +61,7 @@ const ActivityDetailedHeader = ({ activity }: Props) => {
 									content={activity.title}
 									style={{ color: "white" }}
 								/>
-								{/* <p>{format(activity.date!, "dd MMM yyyy")}</p> */}
+								<p>{activityDate && format(activityDate, "dd MMM yyyy")}</p>
 								<p>
 									Hosted by{" "}
 									<strong>
