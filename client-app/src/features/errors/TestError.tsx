@@ -4,7 +4,7 @@ import { useState } from "react";
 import ValidationError from "./ValidationError";
 
 const TestErrors = () => {
-	const baseUrl = "http://192.168.20.50:5000/api/";
+	const baseUrl = process.env.REACT_APP_API_URL;
 	const [errors, setErrors] = useState(null);
 
 	function handleNotFound() {
