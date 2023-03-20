@@ -17,7 +17,7 @@ const ProfilePage = () => {
 		return () => {
 			setActiveTab(0);
 		};
-	}, [loadProfile, username]);
+	}, [loadProfile, username, setActiveTab]);
 
 	if (loadingProfile) return <Loading content="Loading profile..." />;
 
