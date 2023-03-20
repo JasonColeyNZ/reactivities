@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Application.Profiles;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -23,6 +18,14 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(command));
         }
+
+        [HttpGet("{username}/activities")]
+        public async Task<IActionResult> GetProfileActivites(string username, string predicate)
+        {
+            return HandleResult(await Mediator.Send(new ListActivities.Query
+            { Predicate = predicate, Username = username }));
+        }
+
 
     }
 }
