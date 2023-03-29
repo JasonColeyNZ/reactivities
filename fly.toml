@@ -1,4 +1,4 @@
-# fly.toml file generated for reactivities-udemy on 2023-03-21T10:36:41+10:00
+# fly.toml file generated for reactivities-udemy on 2023-03-21T14:31:39+10:00
 
 app = "reactivities-udemy"
 kill_signal = "SIGINT"
@@ -10,10 +10,9 @@ processes = []
   image = "jasoncoley/reactivities:latest"
 
 [env]
-  ASPNETCORE_URLS="http://+:8080"
-  Cloudinary__CloudName="dgpccmgqf"
-  Cloudinary__ApiKey="878527214468162"
-
+  ASPNETCORE_URLS = "http://+:8080"
+  Cloudinary__ApiKey = "878527214468162"
+  Cloudinary__CloudName = "dgpccmgqf"
 
 [experimental]
   auto_rollback = true
