@@ -1,6 +1,6 @@
-# fly.toml file generated for reactivities-udemy on 2023-03-21T14:31:39+10:00
+# fly.toml file generated for reactivities-jaynz on 2023-03-29T11:10:03+10:00
 
-app = "reactivities-udemy"
+app = "reactivities-jaynz"
 kill_signal = "SIGINT"
 kill_timeout = 5
 primary_region = "syd"

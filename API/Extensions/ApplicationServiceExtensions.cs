@@ -35,6 +35,7 @@ namespace API.Extensions
                 {
                     // Use connection string provided at runtime by FlyIO.
                     var connUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+                    Console.WriteLine(connUrl);
                     // Parse connection URL to connection string for Npgsql
                     connUrl = connUrl.Replace("postgres://", string.Empty);
                     var pgUserPass = connUrl.Split("@")[0];
@@ -47,7 +48,7 @@ namespace API.Extensions
                     var pgPort = pgHostPort.Split(":")[1];
                     var updatedHost = pgHost.Replace("flycast", "internal");
 
-                    connStr = $"Server={updatedHost}; Port={pgPort}; User Id = {pgUser}; Password ={pgPass}; Database ={pgDb};";
+                    connStr = $"Server={updatedHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};";
                 }
 
                 // Whether the connection string came from the local development configuration file

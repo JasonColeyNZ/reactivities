@@ -12,5 +12,6 @@ export default defineConfig({
 	},
 	build: {
 		outDir: "../API/wwwroot",
+		emptyOutDir: true,
 	},
 });
