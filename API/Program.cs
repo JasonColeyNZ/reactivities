@@ -1,4 +1,3 @@
-using System.Data;
 using API.Extensions;
 using API.Middleware;
 using API.SignalR;
@@ -35,8 +34,8 @@ app.UseCsp(opt => opt
     .FontSources(s => s.Self().CustomSources("https://fonts.gstatic.com", "data:"))
     .FormActions(s => s.Self())
     .FrameAncestors(s => s.Self())
-    .ImageSources(x => x.Self().CustomSources("blob:", "https://res.cloudinary.com"))
-    .ScriptSources(s => s.Self())
+    .ImageSources(x => x.Self().CustomSources("blob:", "data:", "https://res.cloudinary.com", "https://platform-lookaside.fbsbx.com"))
+    .ScriptSources(s => s.Self().CustomSources("https://connect.facebook.net"))
 );
 
 // Configure the HTTP request pipeline.
@@ -53,6 +52,7 @@ else
         await next.Invoke();
     });
 }
+
 
 app.UseCors("CorsPolicy");
 

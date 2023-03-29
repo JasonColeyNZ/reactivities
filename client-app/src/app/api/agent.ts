@@ -17,6 +17,7 @@ const sleep = (delay: number) => {
 };
 
 axios.defaults.baseURL = import.meta.env.REACT_APP_API_URL; // "http://192.168.20.50:5000/api";
+
 //process.env.REACT_APP_API_URL;
 
 axios.interceptors.request.use((config) => {
@@ -106,6 +107,8 @@ const Account = {
 	login: (user: UserFormValues) => requests.post<User>("/account/login", user),
 	register: (user: UserFormValues) =>
 		requests.post<User>("/account/register", user),
+	fbLogin: (accessToken: string) =>
+		requests.post<User>(`/account/fbLogin?accessToken=${accessToken}`, {}),
 };
 
 const Profiles = {
