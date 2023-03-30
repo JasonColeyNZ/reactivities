@@ -70,10 +70,6 @@ namespace API.Extensions
                             "https://localhost:3000",
                             "http://192.168.20.50:3000",
                             "https://192.168.20.50:3000");
-                    // policy.AllowAnyMethod()
-                    //     .AllowAnyHeader()
-                    //     .AllowCredentials()
-                    //     .WithOrigins("http://192.168.20.50:3000", "https://192.168.20.50:3000");
                 });
             });
             services.AddMediatR(typeof(List.Handler));
